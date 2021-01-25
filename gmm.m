@@ -2,6 +2,7 @@ function obj_gmm = gmm(x,Y,X)
     shape = size(X);
     T = shape(1);
     N = shape(2);
+    I = eye(N);
     rho = x(end-2);
     gamma = x(end-1);
     beta = x(end);
@@ -14,6 +15,6 @@ function obj_gmm = gmm(x,Y,X)
         temp = ERR(j,:)'*X(j,:);
         gnt = gnt + reshape(temp,N*N,1);
     end
-    Weight = I;
+    Weight = eye(N*N);
     obj_gmm = gnt'*Weight*gnt;
 end 
