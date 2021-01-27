@@ -1,11 +1,11 @@
 function [x, fval] = min_pen_obj(obj_fun,x0)
-
+options = optimoptions(@fmincon,'Algorithm','sqp','Display','off');
 [n, ~] = size(x0);
 lb = zeros([n,1]);
-lb(end) = -inf;
-lb(end-1) = -inf;
-ub = ones([n,1])*inf;
+lb(end) = -5;
+lb(end-1) = -5;
+% ub = ones([n,1])*inf;
 
-[x, fval] = fmincon(obj_fun,x0,[],[],[],[],lb,ub);
+[x, fval] = fmincon(obj_fun,x0,[],[],[],[],lb,[],[],options);
 
 end 

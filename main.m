@@ -1,8 +1,8 @@
 
 % global constant variables
 k = 500;
-N=10;% number of individuals
-T=100;% time horizon
+N=5;% number of individuals
+T=1000;% time horizon
 rho0=0.3;
 beta0=0.4;
 gamma0=0.5;
@@ -43,12 +43,14 @@ for i = 1:T
 end
 
 %estimation
-p1 = 1;
+p1 = 0.5;
 x_initial = x_true;
-x_initial(end-2:end) =0;
+x_initial(end-2:end)= 0;
 % x_initial = x_initial';
 f_min_gmm = @(x)gmm_lasso_stage_one(x,Y,X,p1);
 [x_gmm, obj_gmm] = min_pen_obj(f_min_gmm,x_initial);
+estimate_wlist = x_gmm(1:end-3);
+estimate_network = reconstruct(estimate_wlist,N);
 
 
 
