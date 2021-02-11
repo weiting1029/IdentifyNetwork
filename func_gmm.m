@@ -1,4 +1,4 @@
-function obj_gmm = gmm(x,Y,X)
+function obj_gmm = func_gmm(x,Y,X)
     shape = size(X);
     T = shape(1);
     N = shape(2);
@@ -7,7 +7,7 @@ function obj_gmm = gmm(x,Y,X)
     gamma = x(end-1);
     beta = x(end);
     Wlist = x(1:end-3);
-    W = reconstruct(Wlist,N);
+    W = func_reconstruct(Wlist,N);
     ERR = (I-rho*W)*Y'-(beta*I+gamma*W)*X';
     ERR = ERR';
     gnt = zeros(N*N,1);    

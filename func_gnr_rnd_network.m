@@ -1,4 +1,4 @@
-function rnd_W = gnr_rnd_network(N)
+function rnd_W = func_gnr_rnd_network(N)
     rnd_W = zeros(N);
     rd = randi(N-1,N,1);
     for i = 1:N

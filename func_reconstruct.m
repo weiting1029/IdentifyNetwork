@@ -1,4 +1,4 @@
-function W = reconstruct(Wlist,N)
+function W = func_reconstruct(Wlist,N)
     Wlist = Wlist';
     Wlist = [0 Wlist];
     for i = 2:N

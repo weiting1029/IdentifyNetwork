@@ -1,4 +1,4 @@
-function [x, fval] = min_pen_obj(obj_fun,x0)
+function [x, fval] = func_min_pen_obj(obj_fun,x0)
 options = optimoptions(@fmincon,'Algorithm','sqp','Display','off');
 [n, ~] = size(x0);
 lb = zeros([n,1]);
