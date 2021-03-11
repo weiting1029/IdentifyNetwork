@@ -1,4 +1,4 @@
-     function W = func_reconstruct(Wlist,N)
+function W = func_reconstruct(Wlist,N)
     temp_wmatrix = reshape(Wlist,[N-2,N]);
     temp_wmatrix = temp_wmatrix';
     Wlist = Wlist';

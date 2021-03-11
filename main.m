@@ -2,10 +2,10 @@
 % global constant variables
 k = 10;
 N=10;% number of individuals
-T=25;% time horizon 
-rho0=0.3;
-beta0=0.4;
-gamma0=0.5;
+T=100;% time horizon 
+rho0=0.8;% endogenous social effect
+beta0=0.8;% measures sensitivity to its own characteristic
+gamma0=0;% exogenous social effect
 I = eye(N);
 unit = ones([N,1]);
 zero = zeros([N,1]);
@@ -44,18 +44,18 @@ Y = zeros([T,N]);
 Y = func_gnr_dgp(beta0,gamma0,rho0,X,rd_network1,Err,Y);
 
 %estimation
-p1 = 1;
+p1 = 10;
 p2 = 100;
 x_initial = x_true;  
 x_initial(end-2:end)= 0;
 % x_initial = x_initial';
+
+
 f_min_gmm = @(x)func_gmm_lasso_stage_one(x,Y,X,p1);
 [x_gmm, obj_gmm] = func_min_pen_obj(f_min_gmm,x_initial);
 estimate_scalar = x_gmm(end-2:end);
 estimate_wlist = x_gmm(1:end-3);
 estimate_network = func_reconstruct(estimate_wlist,N);
-
-
 
 
 x_initial_slack = [x_true(1:end-3);x_true(1:end-3);x_initial(end-2:end)];

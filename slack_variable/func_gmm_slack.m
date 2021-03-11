@@ -1,4 +1,18 @@
 function obj_gmm_slack = func_gmm_slack(x,Y,X)
+%FUNC_GMM_SLACK construct the unpenalised gmm function
+%
+%Syntax: obj_gmm_slack = func_gmm_slack(x,Y,X)
+%
+%Inputs:
+%   x - a list of N*(N-2)+3 elements, the last three elements are (rho,gamma,beta)
+%   Y - dependent variables
+%   X - explanatory variables
+%
+%Outputs:
+%   obj_gmm_slack - the objective value of the unpenalised gmm unction
+%
+
+
     shape = size(X);
     T = shape(1);
     N = shape(2);
