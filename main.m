@@ -3,7 +3,7 @@
 k = 10;
 N=10;% number of individuals
 T=100;% time horizon 
-rho0=0;% endogenous social effect
+% rho0=0.5;% endogenous social effect
 beta0=0.8;% measures sensitivity to its own characteristic
 gamma0=0.5;% exogenous social effect
 I = eye(N);
@@ -39,12 +39,20 @@ x_true(1:end-3) = func_remove_diag(rd_network1,N);
 
 
 
-%data generating process
+%%%%%%%%%%%data generating process%%%%%%%%%%%%%%%%%
 Y = zeros([T,N]);
 Y = func_gnr_dgp(beta0,gamma0,rho0,X,rd_network1,Err,Y);
 
-%estimation
-p1 = 30;
+
+
+
+%%%%%%%%%GCV%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+p1_can = 10:2:20;
+[obj_GCV,obj_p1] = func_GCV_LASSO(p1_can,N,T,X,Y);
+
+% % 
+%%%%%%%%%%%%%estimation%%%%%%%%%%%%%%%%%%%%%%%%%%
+p1 = 16;
 p2 = 100;
 rng(1)
 test = func_gnr_rnd_network(N);
@@ -54,13 +62,13 @@ x_initial(1:end-3) = zeros([N*(N-2),1]);
 x_initial(end-2:end)= 0;
 % x_initial = x_initial';
 
-
-f_min_gmm = @(x)func_gmm_lasso_stage_one(x,Y,X,p1);
-[x_gmm, obj_gmm] = func_min_pen_obj(f_min_gmm,x_initial);
-estimate_scalar = x_gmm(end-2:end);
-estimate_wlist = x_gmm(1:end-3);
-estimate_network = func_reconstruct(estimate_wlist,N);
-
+% 
+% f_min_gmm = @(x)func_gmm_lasso_stage_one(x,Y,X,p1);
+% [x_gmm, obj_gmm] = func_min_pen_obj(f_min_gmm,x_initial);
+% estimate_scalar = x_gmm(end-2:end);
+% estimate_wlist = x_gmm(1:end-3);
+% estimate_network = func_reconstruct(estimate_wlist,N);
+% 
 
 x_initial_slack = [x_initial(1:end-3);x_initial(1:end-3);x_initial(end-2:end)];
 f_min_gmm_slack = @(x)func_gmm_lasso_stage_one_slack(x,Y,X,p1);
@@ -68,6 +76,7 @@ f_min_gmm_slack = @(x)func_gmm_lasso_stage_one_slack(x,Y,X,p1);
 estimate_scalar_slack = x_gmm_slack(end-2:end);
 estimate_wlist_slack = x_gmm_slack(1:N*(N-2));
 estimate_network_slack= func_reconstruct(estimate_wlist_slack,N);
+
 
 
 

@@ -1,0 +1,9 @@
+function [p1,p2,BIC] = func_BIC(can_p1,can_p2                                                                                                                                                                             )
+
+
+
+
+
+
+end
+
