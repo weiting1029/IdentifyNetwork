@@ -51,9 +51,9 @@ p1_can = 10:2:20;
 [obj_GCV,obj_p1] = func_GCV_LASSO(p1_can,N,T,X,Y);
 
 % % 
-%%%%%%%%%%%%%estimation%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%LASSO***estimation%%%%%%%%%%%%%%%%%%%%%%%%%%
 p1 = 16;
-p2 = 100;
+% p2 = 100;
 rng(1)
 test = func_gnr_rnd_network(N);
 x_initial = x_true;
@@ -76,6 +76,10 @@ f_min_gmm_slack = @(x)func_gmm_lasso_stage_one_slack(x,Y,X,p1);
 estimate_scalar_slack = x_gmm_slack(end-2:end);
 estimate_wlist_slack = x_gmm_slack(1:N*(N-2));
 estimate_network_slack= func_reconstruct(estimate_wlist_slack,N);
+
+
+
+
 
 
 
