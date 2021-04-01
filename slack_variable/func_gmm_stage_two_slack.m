@@ -1,4 +1,4 @@
-function obj_gmm_slack = func_gmm_slack(x,Y,X,x_stage_one)
+function obj_gmm_slack_s2 = func_gmm_stage_two_slack(x,Y,X,x_stage_one)
 %FUNC_GMM_SLACK construct the unpenalised gmm function
 %
 %Syntax: obj_gmm_slack = func_gmm_slack(x,Y,X)
@@ -18,9 +18,11 @@ function obj_gmm_slack = func_gmm_slack(x,Y,X,x_stage_one)
     rho = x(end-2);
     gamma = x(end-1);
     beta = x(end);
-    Wlist = x(1:N*(N-2));
+    n = (length(x)-3)/2;
+    Wlist = x(1:n);
+    estimate_wlist = x_stage_one(1:n);
 %     slack_var = x(N*(N-2)+1:end-3);
-    W = func_reconstruct(Wlist,N);
+    W = func_reconstruct_stage2(Wlist,N,estimate_wlist);
     ERR = (I-rho*W)*Y'-(beta*I+gamma*W)*X';
     ERR = ERR';
     gnt = zeros(N*N,1);    
@@ -29,5 +31,5 @@ function obj_gmm_slack = func_gmm_slack(x,Y,X,x_stage_one)
         gnt = gnt + reshape(temp,N*N,1);
     end
     Weight = eye(N*N);
-    obj_gmm_slack = gnt'*Weight*gnt/T;
+    obj_gmm_slack_s2 = gnt'*Weight*gnt/T;
 end 

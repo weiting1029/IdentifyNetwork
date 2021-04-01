@@ -10,3 +10,8 @@ title("Real network ")
 figure()
 heatmap(estimate_network_slack)
 title("Formulation 2")
+
+
+figure()
+heatmap(estimate_network_slack_stage2)
+title('Adaptive LASSO')

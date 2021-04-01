@@ -93,9 +93,8 @@ estimate_network_slack= func_reconstruct(estimate_wlist_slack,N);
 
 %%%%%%%STAGE TWO ESTIMATION%%%%%%%%%%%%%%%%%%%%%%%%
 x_initial_slack_stage2 = zeros([nnz(estimate_wlist_slack)*2+3,1]);
-estimate_slack_var = x_gmm_slack(N*(N-2)+1:end-3);
-estimate_slack_var(estimate_slack_var==0)=[];
-f_min_gmm_slack_stage2= @(x)func_gmm_lasso_stage_two_slack(x,Y,X,obj_p11,x_gmm_slack);
+estimate_slack_var = x_gmm_slack(nnz(estimate_wlist_slack)+1:end-3);
+f_min_gmm_slack_stage2= @(x)func_gmm_lasso_stage_two_slack(x,Y,X,obj_p11,estimate_slack_var);
 [x_gmm_slack_stage2, obj_gmm_slack_stage2] = func_min_pen_obj_slack(f_min_gmm_slack_stage2,x_initial_slack_stage2,N);
 estimate_scalar_slack_stage2 = x_gmm_slack_stage2(end-2:end);
 estimate_wlist_slack_stage2 = x_gmm_slack_stage2(1:N*(N-2));

@@ -1,4 +1,4 @@
-function [x, fval] = func_min_pen_obj_slack(obj_fun,x0,N)
+function [x, fval] = func_min_pen_obj_slack(obj_fun,x0,~)
 %FUNC_MIN_PEN_OBJ_SLACK define the minimization routine
 % 
 %Syntax: [x, fval] = func_min_pen_obj_slack(obj_fun,x0,N)
@@ -17,7 +17,7 @@ options = optimoptions(@fmincon,'Algorithm','active-set','Display','off');
 lb = zeros([n,1]);
 lb(end) = -5;
 lb(end-1) = -5;
-temp_n = N*(N-2);
+temp_n = (n-3)/2;
 A = zeros([2*temp_n,n]);
 b = zeros([2*temp_n,1]);
 for i = 1:temp_n
